@@ -394,12 +394,7 @@ em {
 .nav__toggle[aria-expanded="true"] .nav__toggle-line:nth-child(3) {
   transform: rotate(-45deg) translate(7px, -6px);
 }
-/* Optional: Show toggle only on mobile */
-@media (max-width: 767px) {
-  .nav__toggle {
-    display: flex;
-  }
-}
+
 @media (max-width: 768px) {
   .nav__toggle {
     display: flex;
@@ -428,7 +423,6 @@ em {
     padding: var(--spacing-sm) var(--spacing-lg);
   }
 }
-
 
 /* ==========================================================================
    HERO SECTION
@@ -975,5 +969,4 @@ em {
     transform: translateY(0);
     opacity: 1;
   }
-
 }
