@@ -3,940 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalyst - Naturally Smart Enterprise Intelligence</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav-links a:hover {
-            color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #FFD700;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 3px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 150px 0 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s ease 0.3s forwards;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #333;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1s ease 0.6s forwards;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Challenges Section */
-        .challenges {
-            padding: 100px 0;
-            background: #f8f9fa;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .section-title.animate {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .challenges-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .challenge-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .challenge-card.animate {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .challenge-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-        }
-
-        .challenge-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-
-        .challenge-stat {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .challenge-text {
-            color: #666;
-            font-size: 1rem;
-        }
-
-        /* About Section */
-        .about {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-content {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-
-        .about-content.animate {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-
-        .about-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #666;
-        }
-
-        .about-features {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-
-        .about-features.animate {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .feature {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .feature:hover {
-            background: #667eea;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Solutions Section */
-        .solutions {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .solution-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .solution-card.animate {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .solution-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .solution-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 0;
-            background: #f8f9fa;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .contact-info {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-
-        .contact-info.animate {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateX(10px);
-        }
-
-        .contact-icon {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            opacity: 0;
-            transform: translateX(50px);
-        }
-
-        .contact-form.animate {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e1e1;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .submit-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Footer */
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInLeft {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 100%;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: right 0.3s ease;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .challenge-card,
-            .solution-card {
-                padding: 1.5rem;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero {
-                padding: 120px 0 80px;
-            }
-
-            .challenges,
-            .about,
-            .solutions,
-            .contact {
-                padding: 60px 0;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <meta name="description" content="Catalyst - Enterprise Intelligence Solutions. We help you be Naturally Smart, not just Artificially Intelligent. Affordable AI solutions for growing businesses.">
+    <meta name="keywords" content="Enterprise Intelligence, AI Solutions, Knowledge Graphs, Business Intelligence, Data Analytics">
+    <meta name="author" content="Catalyst">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Catalyst - Enterprise Intelligence Solutions">
+    <meta property="og:description" content="We help you be Naturally Smart, not just Artificially Intelligent">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.catalyst.com">
+    
+    <title>Catalyst - Enterprise Intelligence Solutions | Naturally Smart AI</title>
+    
+    <!-- Preconnect to external resources for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
     <!-- Header -->
-    <header id="header">
-        <nav class="container">
-            <div class="logo">CATALYST</div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#challenges">Challenges</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#solutions">Solutions</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header role="banner" class="header" id="header">
+        <nav role="navigation" class="nav container" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="#home" class="nav__logo" aria-label="Catalyst Home">
+                    <span class="nav__logo-text">CATALYST</span>
+                </a>
             </div>
+            
+            <!-- Mobile menu button -->
+            <button class="nav__toggle" 
+                    aria-label="Toggle navigation menu"
+                    aria-controls="nav-menu"
+                    aria-expanded="false"
+                    type="button">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+            
+            <ul class="nav__menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="#home" role="menuitem" class="nav__link">Home</a></li>
+                <li role="none"><a href="#challenges" role="menuitem" class="nav__link">Challenges</a></li>
+                <li role="none"><a href="#solutions" role="menuitem" class="nav__link">Solutions</a></li>
+                <li role="none"><a href="#about" role="menuitem" class="nav__link">About</a></li>
+                <li role="none"><a href="#contact" role="menuitem" class="nav__link">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Naturally Smart, not just Artificially Intelligent</h1>
-                <p class="hero-subtitle">Bringing Enterprise Intelligence within reach with affordable, scalable solutions for growing businesses</p>
-                <a href="#contact" class="cta-button">Get Started Today</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Challenges Section -->
-    <section class="challenges" id="challenges">
-        <div class="container">
-            <h2 class="section-title fade-in">Current Challenges Slowing Down Your AI-Driven Insights</h2>
-            <div class="challenges-grid">
-                <div class="challenge-card fade-in">
-                    <div class="challenge-stat">25%</div>
-                    <p class="challenge-text">Limited yields from investments in AI solutions across enterprises</p>
-                </div>
-                <div class="challenge-card fade-in">
-                    <div class="challenge-stat">40%</div>
-                    <p class="challenge-text">Of Agentic investments at risk of being stalled by 2027</p>
-                </div>
-                <div class="challenge-card fade-in">
-                    <div class="challenge-stat">65%</div>
-                    <p class="challenge-text">Enterprise AI solutions are fragmented point solutions</p>
-                </div>
-                <div class="challenge-card fade-in">
-                    <div class="challenge-stat">Growing</div>
-                    <p class="challenge-text">Enterprise data exponentially, while hallucinations undermine trust in AI systems</p>
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section id="home" class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero__content">
+                    <h1 id="hero-title" class="hero__title">CATALYST</h1>
+                    <p class="hero__tagline">We help you be Naturally Smart, not just Artificially Intelligent</p>
+                    <p class="hero__subtitle">Bringing Enterprise Intelligence within reach</p>
+                    <a href="#contact" class="cta-button" aria-describedby="cta-description">
+                        Get Started Today
+                    </a>
+                    <span id="cta-description" class="sr-only">Contact us to begin your enterprise intelligence journey</span>
                 </div>
             </div>
-        </div>
-    </section>
+            <!-- Decorative background pattern -->
+            <div class="hero__pattern" aria-hidden="true"></div>
+        </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-content fade-in">
-                    <h2>Who We Are</h2>
-                    <p><strong>CATALYST</strong> is YOUR trusted partner for organic Enterprise Intelligence adoption. We help YOU build YOUR Enterprise Intelligence Platform that provides a connected network of knowledge "wisdom" that is essential for YOUR business growth.</p>
-                    <p>Our teams are the best combination of business and technology experts, who are invested in YOUR success. We maintain Technology and Talent in tandem.</p>
-                    <p><em>"Just like the English alphabet, we believe that E (Emotions) comes before I (Intelligence)"</em></p>
-                </div>
-                <div class="about-features fade-in">
-                    <div class="feature-grid">
-                        <div class="feature">
-                            <div class="feature-icon">🧠</div>
-                            <h4>Knowledge Graphs</h4>
-                            <p>Build connected networks of enterprise wisdom</p>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon">⚡</div>
-                            <h4>Speed & Accuracy</h4>
-                            <p>Derive intelligence with unmatched reliability</p>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon">💼</div>
-                            <h4>Business Context</h4>
-                            <p>Enrich data with meaningful business insights</p>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon">🔄</div>
-                            <h4>Adaptive Solutions</h4>
-                            <p>Adjust to changing business needs seamlessly</p>
-                        </div>
+        <!-- Challenges Section -->
+        <section id="challenges" class="challenges" aria-labelledby="challenges-title">
+            <div class="container">
+                <header class="section__header">
+                    <h2 id="challenges-title" class="section__title">Current Challenges Slowing Down Your AI-Driven Insights</h2>
+                </header>
+                
+                <div class="challenges__grid" role="list" aria-label="AI implementation challenges">
+                    <div class="challenge-card" role="listitem">
+                        <div class="challenge-card__stat" aria-label="25 percent">25%</div>
+                        <p class="challenge-card__text">Limited yields from AI investments</p>
+                    </div>
+                    <div class="challenge-card" role="listitem">
+                        <div class="challenge-card__stat" aria-label="40 percent">40%</div>
+                        <p class="challenge-card__text">Agentic investments at risk of stalling by 2027</p>
+                    </div>
+                    <div class="challenge-card" role="listitem">
+                        <div class="challenge-card__stat" aria-label="65 percent">65%</div>
+                        <p class="challenge-card__text">Enterprise AI solutions are point solutions</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solutions Section -->
-    <section class="solutions" id="solutions">
-        <div class="container">
-            <h2 class="section-title">How Our Solutions Help You Stay Ahead</h2>
-            <div class="solutions-grid">
-                <div class="solution-card fade-in">
-                    <div class="solution-icon">💰</div>
-                    <h3>Cost-Effective Solutions</h3>
-                    <p>Build and operationalize Knowledge Graphs at 15% cost savings YoY compared to market rates with our fractional cost approach.</p>
-                </div>
-                <div class="solution-card fade-in">
-                    <div class="solution-icon">🎯</div>
-                    <h3>Value Realization Model</h3>
-                    <p>Our execution model allows adjustments to changing business needs without sacrificing growth priorities.</p>
-                </div>
-                <div class="solution-card fade-in">
-                    <div class="solution-icon">🔧</div>
-                    <h3>Hybrid Pricing Structure</h3>
-                    <p>Flexible pricing with optional add-on services including consulting, customization, and comprehensive training.</p>
-                </div>
-                <div class="solution-card fade-in">
-                    <div class="solution-icon">📈</div>
-                    <h3>Proven Success</h3>
-                    <p>Successful implementations prioritize long-term value over quick wins, ensuring sustainable growth and ROI.</p>
+                
+                <div class="challenges__footer">
+                    <p>Enterprise Data growing exponentially, and hallucinations continue to undermine trust in AI systems.</p>
+                    <p><strong>Successful implementations have prioritized value over quick wins</strong></p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title fade-in">Get In Touch</h2>
-            <div class="contact-grid">
-                <div class="contact-info fade-in">
-                    <h3>Contact Information</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div>
-                            <strong>Email</strong><br>
-                            hello@catalyst.com
+        <!-- Solutions Section -->
+        <section id="solutions" class="solutions" aria-labelledby="solutions-title">
+            <div class="container">
+                <header class="section__header">
+                    <h2 id="solutions-title" class="section__title">How Our Solutions Help You Stay Ahead</h2>
+                </header>
+                
+                <div class="solutions__grid" role="list" aria-label="Our solution offerings">
+                    <article class="solution-card" role="listitem">
+                        <div class="solution-card__icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div>
-                            <strong>Phone</strong><br>
-                            123-456-7890
+                        <h3 class="solution-card__title">Build & Operationalize Knowledge Graphs</h3>
+                        <p class="solution-card__text">At a fractional cost with <strong>15% cost savings year-over-year</strong> compared to market rates</p>
+                    </article>
+                    
+                    <article class="solution-card" role="listitem">
+                        <div class="solution-card__icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
                         </div>
+                        <h3 class="solution-card__title">Enhanced Data Intelligence</h3>
+                        <p class="solution-card__text">Enrich data in business context for <strong>Speed, Accuracy, and Reliability</strong> in your insights</p>
+                    </article>
+                    
+                    <article class="solution-card" role="listitem">
+                        <div class="solution-card__icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h3 class="solution-card__title">Flexible Hybrid Pricing</h3>
+                        <p class="solution-card__text">Hybrid pricing structures with optional add-on services: Consulting, Customization, and Training</p>
+                    </article>
+                    
+                    <article class="solution-card" role="listitem">
+                        <div class="solution-card__icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="solution-card__title">Value-Based Execution</h3>
+                        <p class="solution-card__text">Execution model that adjusts to changing business needs <strong>without sacrificing growth priorities</strong></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about" aria-labelledby="about-title">
+            <div class="container">
+                <div class="about__content">
+                    <div class="about__text">
+                        <header>
+                            <h2 id="about-title" class="about__title">Who We Are</h2>
+                        </header>
+                        <p class="about__description">
+                            <strong>CATALYST</strong> is YOUR trusted partner for organic Enterprise Intelligence adoption. 
+                            We help YOU build YOUR Enterprise Intelligence Platform that provides a connected network 
+                            of knowledge "wisdom" that is essential for YOUR business growth.
+                        </p>
+                        <p class="about__description">
+                            We build and enhance your Enterprise Intelligence platform, by adopting a rational approach 
+                            to using Knowledge Graph and other AI related technologies.
+                        </p>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <strong>Address</strong><br>
+                    
+                    <aside class="about__highlight" aria-labelledby="about-highlight-title">
+                        <h3 id="about-highlight-title" class="about__highlight-title">Our Philosophy</h3>
+                        <blockquote class="about__quote">
+                            <p>Our motto is to maintain <strong>Technology and Talent in tandem</strong></p>
+                        </blockquote>
+                        <p class="about__team">
+                            Our teams are the best combination of business and technology experts, 
+                            who are invested in <strong>YOUR success</strong>.
+                        </p>
+                        <div class="about__motto">
+                            <p>
+                                <em>Just like the English alphabet, we believe that 
+                                <strong>E (Emotions)</strong> comes before <strong>I (Intelligence)</strong></em>
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <header class="section__header">
+                    <h2 id="contact-title" class="section__title">Get in Touch</h2>
+                    <p class="section__subtitle">Ready to transform your enterprise intelligence? Contact us today.</p>
+                </header>
+                
+                <div class="contact__grid" role="list" aria-label="Contact information">
+                    <div class="contact-item" role="listitem">
+                        <div class="contact-item__icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <h3 class="contact-item__title">Address</h3>
+                        <address class="contact-item__text">
                             123 Anywhere St.<br>
                             Any City, ST 12345
-                        </div>
+                        </address>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🌐</div>
-                        <div>
-                            <strong>Website</strong><br>
+                    
+                    <div class="contact-item" role="listitem">
+                        <div class="contact-item__icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <h3 class="contact-item__title">Phone</h3>
+                        <a href="tel:+11234567890" class="contact-item__link" aria-label="Call us at 1-2-3-4-5-6-7-8-9-0">
+                            123-456-7890
+                        </a>
+                    </div>
+                    
+                    <div class="contact-item" role="listitem">
+                        <div class="contact-item__icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="contact-item__title">Website</h3>
+                        <a href="https://www.catalyst.com" class="contact-item__link" aria-label="Visit our website">
                             www.catalyst.com
-                        </div>
+                        </a>
                     </div>
-                </div>
-                <div class="contact-form fade-in">
-                    <h3>Send Us a Message</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
+                    
+                    <div class="contact-item" role="listitem">
+                        <div class="contact-item__icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
+                        <h3 class="contact-item__title">Email</h3>
+                        <a href="mailto:hello@catalyst.com" class="contact-item__link" aria-label="Send us an email">
+                            hello@catalyst.com
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer>
+    <footer role="contentinfo" class="footer">
         <div class="container">
-            <p>&copy; 2025 Catalyst. All rights reserved. | Affordable Enterprise Intelligence Solutions for Growing Businesses</p>
+            <p class="footer__text">
+                &copy; 2025 Catalyst. Affordable, Enterprise Intelligence Solutions for Growing Businesses.
+            </p>
+            <p class="footer__tagline">
+                We help you be Naturally Smart, not just Artificially Intelligent.
+            </p>
         </div>
     </footer>
 
-    <script>
-        // Mobile Navigation Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('nav-links');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(102, 126, 234, 0.95)';
-                header.style.backdropFilter = 'blur(20px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-                header.style.backdropFilter = 'blur(10px)';
-            }
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Observe section titles and cards
-        document.querySelectorAll('.section-title, .challenge-card, .solution-card, .about-content, .about-features, .contact-info, .contact-form').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const company = formData.get('company');
-            const message = formData.get('message');
-
-            // Simple validation
-            if (!name || !email || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            // Simulate form submission
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            setTimeout(() => {
-                alert('Thank you for your message! We\'ll get back to you soon.');
-                contactForm.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
-        });
-
-        // Add some interactive effects
-        document.querySelectorAll('.challenge-card, .solution-card, .feature').forEach(card => {
-            card.addEventListener('mouseenter', (e) => {
-                e.target.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-
-            card.addEventListener('mouseleave', (e) => {
-                e.target.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-        });
-
-        // Active navigation link highlighting
-        const sections = document.querySelectorAll('section');
-        const navItems = document.querySelectorAll('.nav-links a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === `#${current}`) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        // Add CSS for active nav items
-        const style = document.createElement('style');
-        style.textContent = `
-            .nav-links a.active {
-                color: #FFD700 !important;
-            }
-            .nav-links a.active::after {
-                width: 100% !important;
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <!-- JavaScript -->
+    <script src="scripts.js"></script>
 </body>
 </html>
